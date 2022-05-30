@@ -25,6 +25,7 @@ void BinaryOps::calculateBER(std::string _file1, std::string _file2)
     results.endTime = 0;
 
     std::cout << "Calculating BER..." << std::endl;
+    Logger::saveLog("Calculating BER...");
     file1.open(_file1.c_str(), std::ios::binary);
     file2.open(_file2.c_str(), std::ios::binary);
     char a = 0x00;
@@ -46,13 +47,18 @@ void BinaryOps::calculateBER(std::string _file1, std::string _file2)
     results.ber = ((float)results.errorBits / results.totalBits);
     results.endTime = clock();
     std::cout << "BER calculation has been completed.\n" << std::endl;
+    Logger::saveLog("BER calculation has been completed.");
     BinaryOps::printBERResults(results);
 }
 
 void BinaryOps::printBERResults(berResults results)
 {
-    std::cout << "Number of total bits: " << results.totalBits << std::endl;
-    std::cout << "Number of error bits: " << results.errorBits << std::endl;
-    std::cout << "BER result: " << results.ber << std::endl;
-    std::cout << "Calculation time: " << (((float)results.endTime - results.startTime) / CLOCKS_PER_SEC) << "s" << std::endl;
+    std::stringstream ss;
+    ss << "RESULTS" << std::endl;
+    ss << " Number of total bits: " << results.totalBits << std::endl;
+    ss << " Number of error bits: " << results.errorBits << std::endl;
+    ss << " BER result: " << results.ber << std::endl;
+    ss << " Calculation time: " << (((float)results.endTime - results.startTime) / CLOCKS_PER_SEC) << "s";
+    std::cout << ss.str() << std::endl;
+    Logger::saveLog(ss.str());
 }
