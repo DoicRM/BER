@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # for generated files
 *.bin
+log.txt
